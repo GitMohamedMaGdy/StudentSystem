@@ -1,0 +1,59 @@
+﻿@model Web_Consume_project.ViewModels.StudentInCourseListViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Student System</h1>
+<br />
+
+<div class="col-md-10">
+    <div class="form-group">
+        <label asp-for="SelectedCourse" class="control-label"></label>
+        @Html.DropDownListFor(model => model.SelectedCourse, new SelectList(Model.Courses, "Id", "Name"), "Select gender", new { @class = "form-control", @id = "dropDownId" })
+    </div>
+</div>
+<br />
+
+<div class="col-md-10">
+
+    <div id="tblStudents">
+
+    </div>
+
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#dropDownId").val(0);
+            $("#dropDownId").change(function () {
+                var courseId = $("#dropDownId").val();
+                GetStudentInfo(courseId);
+            });
+
+        });
+
+        function GetStudentInfo(courseId) {
+
+            $.ajax({
+                async: true,
+                type: 'GET',
+                dataType: 'html',
+                contentType: 'application/json;charset=utf-8',
+                data: { CourseId: courseId },
+                url: '/Home/GetStudentInfo',
+                success: function (data) {
+                    $("#tblStudents").html(data);
+                },
+                error: function () {
+                    alert("There is an error in getting students")
+                }
+
+            });
+
+        }
+
+    </script>
+}

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Web_Consume_project.Models.Student>
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.GenderId)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th style="text-align:center">Reverse Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.GenderId)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td>
+                    @reverseString(item.FirstName +" "+item.LastName) 
+
+                </td>
+                <td style="text-align:center">
+                    @Html.ActionLink("Edit", "Edit", new { Id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { Id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    string reverseString(string s)
+    {
+
+        string[] inputarray = s.Split(" ");
+        char[] result1 = inputarray[0].ToCharArray();
+        char[] result2 = inputarray[1].ToCharArray();
+        Array.Reverse(result1);
+        Array.Reverse(result2);
+        string result = (new string(result1)+ " " + new string(result2)).ToString();
+        return result;
+    }
+}
